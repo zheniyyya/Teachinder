@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Teachinder - platform for finding teachers">
+  <title>Teachinder</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=PT+Sans:wght@400;700&family=Source+Sans+3:wght@400;600&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+<div class="container">
+
+  <header class="header">
+    <div class="header-top">
+      <a href="#" class="logo">Teachinder</a>
+
+      <form class="search-form" role="search" action="#" method="get">
+        <label class="visually-hidden" for="q">Search teachers</label>
+        <input id="q" type="search" name="q" placeholder="Name, note or age to search">
+        <button type="submit" class="btn">Search</button>
+      </form>
+    </div>
+
+    <div class="header-nav">
+      <ul class="nav-links" aria-label="Main navigation">
+        <li><a href="#teachers">Teachers</a></li>
+        <li><a href="#statistics">Statistics</a></li>
+        <li><a href="#favorites">Favorites</a></li>
+        <li><a href="#about">About</a></li>
+      </ul>
+      <a class="btn" href="#add-modal">Add teacher</a>
+    </div>
+  </header>
+  
+
+  <section id="teachers">
+    <h2 class="section-title">Top Teachers</h2>
+
+    <form class="filters" role="group" aria-label="Teachers filters">
+      <div class="filter-group">
+        <label for="age">Age</label>
+        <select id="age" name="age">
+          <option>18-31</option>
+          <option>32-45</option>
+          <option>46+</option>
+        </select>
+      </div>
+
+      <div class="filter-group">
+        <label for="region">Region</label>
+        <select id="region" name="region">
+          <option>Any</option>
+          <option>Europe</option>
+          <option>Asia</option>
+          <option>America</option>
+          <option>Africa</option>
+          <option>Australia</option>
+        </select>
+      </div>
+
+      <div class="filter-group">
+        <label for="sex">Sex</label>
+        <select id="sex" name="sex">
+          <option>Male</option>
+          <option>Female</option>
+          <option>Any</option>
+        </select>
+      </div>
+
+      <label class="checkbox-label">
+        <input type="checkbox" name="only-photo"> Only with photo
+      </label>
+      <label class="checkbox-label">
+        <input type="checkbox" name="only-fav"> Only favorites
+      </label>
+    </form>
+
+    <div class="teachers-grid">
+      <a class="teacher-card" href="#info-modal">
+        <div class="teacher-avatar">
+          <img src="img/ihor.png" alt="Ihor Tkachuk">
+        </div>
+        <div class="teacher-name">Ihor<br>Tkachuk</div>
+        <div class="teacher-subject">Chemistry</div>
+        <div class="teacher-country">Ukraine</div>
+      </a>
+
+      <a class="teacher-card" href="#info-modal">
+        <div class="teacher-avatar">
+          <img src="img/pragg.png" alt="Pragg Rameshbabu">
+        </div>
+        <div class="teacher-name">Pragg<br>Rameshbabu</div>
+        <div class="teacher-subject">Chess</div>
+        <div class="teacher-country">India</div>
+      </a>
+
+      <a class="teacher-card" href="#info-modal">
+        <div class="teacher-avatar teacher-avatar--star">
+          <img src="img/floor.png" alt="Floor Jansen">
+          <span class="star" aria-label="Favorite">★</span>
+        </div>
+        <div class="teacher-name">Floor<br>Jansen</div>
+        <div class="teacher-subject">Vocal</div>
+        <div class="teacher-country">Denmark</div>
+      </a>
+
+      <a class="teacher-card" href="#info-modal">
+        <div class="teacher-avatar">
+          <img src="img/john.png" alt="John Burke">
+        </div>
+        <div class="teacher-name">John<br>Burke</div>
+        <div class="teacher-subject">Computer Science</div>
+        <div class="teacher-country">Belgium</div>
+      </a>
+
+      <a class="teacher-card" href="#info-modal">
+        <div class="teacher-avatar teacher-avatar--star">
+          <img src="img/ari.png" alt="Ari Tang">
+          <span class="star" aria-label="Favorite">★</span>
+        </div>
+        <div class="teacher-name">Ari<br>Tang</div>
+        <div class="teacher-subject">Biology</div>
+        <div class="teacher-country">China</div>
+      </a>
+
+      <a class="teacher-card" href="#info-modal">
+        <div class="teacher-avatar">
+          <img src="img/rachael.png" alt="Rachel Andrew">
+        </div>
+        <div class="teacher-name">Rachel<br>Andrew</div>
+        <div class="teacher-subject">Medicine</div>
+        <div class="teacher-country">UK</div>
+      </a>
+
+      <a class="teacher-card" href="#info-modal">
+        <div class="teacher-avatar">
+          <div class="teacher-initials">A.M</div>
+        </div>
+        <div class="teacher-name">Anna<br>Muzychuk</div>
+        <div class="teacher-subject">Chess</div>
+        <div class="teacher-country">Belarus</div>
+      </a>
+
+      <a class="teacher-card" href="#info-modal">
+        <div class="teacher-avatar">
+          <div class="teacher-initials">R.L</div>
+        </div>
+        <div class="teacher-name">Radoslaw<br>Ljubojevic</div>
+        <div class="teacher-subject">Physics</div>
+        <div class="teacher-country">Poland</div>
+      </a>
+    </div>
+  </section>
+
+  <section id="statistics">
+    <h2 class="section-title">Statistics</h2>
+
+    <table class="stats-table">
+      <caption class="visually-hidden">Statistics of registered teachers</caption>
+      <thead>
+        <tr>
+          <th scope="col">Name</th>
+          <th scope="col">Speciality</th>
+          <th scope="col">Age</th>
+          <th scope="col">Gender</th>
+          <th scope="col">Nationality</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>Ihor Tkachuk</td><td>Chemistry</td><td>32</td><td>Male</td><td>Ukraine</td></tr>
+        <tr><td>Pragg Rameshbabu</td><td>Chess</td><td>19</td><td>Male</td><td>India</td></tr>
+        <tr><td>Floor Jansen</td><td>Vocal</td><td>42</td><td>Female</td><td>Denmark</td></tr>
+        <tr><td>John Burke</td><td>Computer Science</td><td>38</td><td>Male</td><td>Belgium</td></tr>
+        <tr><td>Ari Tang</td><td>Biology</td><td>29</td><td>Female</td><td>China</td></tr>
+        <tr><td>Rachel Andrew</td><td>Medicine</td><td>47</td><td>Female</td><td>UK</td></tr>
+        <tr><td>Anna Muzychuk</td><td>Chess</td><td>34</td><td>Female</td><td>Belarus</td></tr>
+        <tr><td>Radoslaw Ljubojevic</td><td>Physics</td><td>52</td><td>Male</td><td>Poland</td></tr>
+      </tbody>
+    </table>
+
+    <nav class="pagination" aria-label="Statistics pages">
+      <span class="current" aria-current="page">1</span>
+      <a href="#statistics">2</a>
+      <a href="#statistics">3</a>
+      <span aria-hidden="true">...</span>
+      <a href="#statistics">Last</a>
+    </nav>
+  </section>
+
+  <section id="favorites">
+    <h2 class="section-title">Favorites</h2>
+
+    <div class="favorites-wrapper">
+      <button class="fav-arrow" type="button" aria-label="Previous" disabled aria-disabled="true">‹</button>
+
+      <div class="favorites-list">
+        <a class="teacher-card" href="#info-modal">
+          <div class="teacher-avatar">
+            <img src="img/ihor.png" alt="Ihor Tkachuk">
+          </div>
+          <div class="teacher-name">Ihor<br>Tkachuk</div>
+          <div class="teacher-country">Ukraine</div>
+        </a>
+
+        <a class="teacher-card" href="#info-modal">
+          <div class="teacher-avatar">
+            <div class="teacher-initials">A.M</div>
+          </div>
+          <div class="teacher-name">Anna<br>Makarevich</div>
+          <div class="teacher-country">Belarus</div>
+        </a>
+
+        <a class="teacher-card" href="#info-modal">
+          <div class="teacher-avatar">
+            <img src="img/john.png" alt="John Burke">
+          </div>
+          <div class="teacher-name">John<br>Burke</div>
+          <div class="teacher-country">Belgium</div>
+        </a>
+
+        <a class="teacher-card" href="#info-modal">
+          <div class="teacher-avatar">
+            <img src="img/ari.png" alt="Ari Tang">
+          </div>
+          <div class="teacher-name">Ari<br>Tang</div>
+          <div class="teacher-country">China</div>
+        </a>
+
+        <a class="teacher-card" href="#info-modal">
+          <div class="teacher-avatar">
+            <img src="img/floor.png" alt="Floor Jansen">
+          </div>
+          <div class="teacher-name">Floor<br>Jansen</div>
+          <div class="teacher-country">Denmark</div>
+        </a>
+      </div>
+
+      <button class="fav-arrow" type="button" aria-label="Next" disabled aria-disabled="true">›</button>
+    </div>
+  </section>
+
+  <section id="about">
+    <h2 class="visually-hidden">About Teachinder</h2>
+    <div class="about-text">
+      <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Maecenas porttitor congue massa.</p>
+      <p>Fusce posuere, magna sed pulvinar ultricies, purus lectus malesuada libero, sit amet commodo magna eros quis urna. Nunc viverra imperdiet enim.</p>
+      <p>Fusce est. Vivamus a tellus.</p>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <ul class="nav-links" aria-label="Footer navigation">
+      <li><a href="#teachers">Teachers</a></li>
+      <li><a href="#statistics">Statistics</a></li>
+      <li><a href="#favorites">Favorites</a></li>
+      <li><a href="#about">About</a></li>
+    </ul>
+    <a class="btn" href="#add-modal">Add teacher</a>
+  </footer>
+
+</div>
+
+<!-- ADD TEACHER -->
+<div class="modal-overlay" id="add-modal" role="dialog" aria-modal="true" aria-labelledby="add-title">
+  <a class="modal-backdrop" href="#!" aria-label="Close dialog"></a>
+
+  <div class="modal">
+    <div class="modal-header">
+      <h3 id="add-title">Add Teacher</h3>
+      <a class="modal-close" href="#!" aria-label="Close dialog">&times;</a>
+    </div>
+
+    <form class="modal-body" action="#" method="post">
+      <div class="form-group">
+        <label for="f-name">Name</label>
+        <input id="f-name" type="text" name="name" placeholder="Enter name" required>
+      </div>
+
+      <div class="form-group">
+        <label for="f-spec">Speciality</label>
+        <select id="f-spec" name="speciality" required>
+          <option value=""> Choose </option>
+          <option>Mathematics</option>
+          <option>Chemistry</option>
+          <option>Physics</option>
+          <option>Computer Science</option>
+          <option>Biology</option>
+          <option>Art</option>
+          <option>Chess</option>
+          <option>English</option>
+          <option>Medicine</option>
+          <option>Web Development</option>
+          <option>History</option>
+        </select>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="f-country">Country</label>
+          <select id="f-country" name="country">
+            <option>Ukraine</option>
+            <option>USA</option>
+            <option>UK</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="f-city">City</label>
+          <input id="f-city" type="text" name="city" placeholder="City">
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="f-email">Email</label>
+          <input id="f-email" type="email" name="email" placeholder="name@domain.com">
+        </div>
+
+        <div class="form-group">
+          <label for="f-phone">Phone</label>
+          <input id="f-phone" type="tel" name="phone" placeholder="+380...">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="f-birth">Date of birth</label>
+        <input id="f-birth" type="date" name="birth">
+      </div>
+
+      <fieldset class="form-group">
+        <legend>Sex</legend>
+        <div class="radio-group">
+          <label><input type="radio" name="sex" value="male"> Male</label>
+          <label><input type="radio" name="sex" value="female"> Female</label>
+        </div>
+      </fieldset>
+
+      <div class="form-group">
+        <label for="f-color">Background color</label>
+        <input id="f-color" type="color" name="color" value="#e74c3c" class="color-input">
+      </div>
+
+      <div class="form-group">
+        <label for="f-notes">Notes (optional)</label>
+        <textarea id="f-notes" name="notes" rows="3" placeholder="Notes..."></textarea>
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn" type="submit">Add</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- TEACHER INFO MODAL -->
+<div class="modal-overlay" id="info-modal" role="dialog" aria-modal="true" aria-labelledby="info-title">
+  <a class="modal-backdrop" href="#!" aria-label="Close dialog"></a>
+
+  <div class="modal modal--wide">
+    <div class="modal-header">
+      <h3 id="info-title">Teacher Info</h3>
+      <a class="modal-close" href="#!" aria-label="Close dialog">&times;</a>
+    </div>
+
+    <div class="modal-body">
+      <div class="teacher-info clearfix">
+        <img class="teacher-info-photo" src="img/ihor.png" alt="Ihor Tkachuk">
+
+        <div class="teacher-info-details">
+          <button class="star-btn" type="button" aria-label="Add to favorites" aria-pressed="false">☆</button>
+
+          <h3>Ihor Tkachuk</h3>
+          <div class="subject">Chemistry</div>
+          <div class="meta">Kyiv, Ukraine</div>
+          <div class="meta">32, Male</div>
+          <div class="meta"><a href="mailto:ihor.tkachuk@domain.ua">ihor.tkachuk@domain.ua</a></div>
+          <div class="meta">+380 (44) 123-4567</div>
+        </div>
+      </div>
+
+      <p class="teacher-info-bio">
+        Ihor Tkachuk is a dedicated chemistry educator from Ukraine. With over 10 years of experience in teaching organic and inorganic chemistry, he focuses on making complex scientific concepts accessible to students of all levels. He is passionate about integrating modern technology into the classroom to foster a deeper understanding of chemical processes.
+      </p>
+
+      <a class="toggle-map" href="#">toggle map</a>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
