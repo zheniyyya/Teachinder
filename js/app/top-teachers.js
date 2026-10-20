@@ -62,7 +62,6 @@ export function initTopTeachers() {
   searchForm.addEventListener('submit', (event) => {
     event.preventDefault();
     searchQuery = searchForm.elements.q.value.trim();
-    // A new search looks through all teachers, so filters left over from earlier don't hide the results
     filtersForm.reset();
     renderGrid();
   });
