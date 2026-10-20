@@ -1,0 +1,11 @@
+{
+  "name": "teachinder",
+  "version": "1.0.0",
+  "description": "FE4U labs: Teachinder layout (Lab 1), data processing (Lab 2) and the interactive page (Lab 3)",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "npx --yes http-server . -c-1 -o",
+    "lab2": "node js/main.js"
+  }
+}

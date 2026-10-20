@@ -1,4 +1,5 @@
 import { COURSES } from './constants.js';
+
 import {
   calculateAge,
   capitalize,
@@ -9,8 +10,6 @@ import {
   getRandomItem,
 } from './helpers.js';
 
-
-
 function getIdFromRandomUser(rawId) {
   const value = rawId?.value;
   if (!value || /NaN|undefined/.test(value)) {
@@ -19,11 +18,9 @@ function getIdFromRandomUser(rawId) {
   return `${rawId.name}${value}`;
 }
 
-
 function checkIsRandomUserInterface(user) {
   return typeof user.name === 'object' && user.name !== null;
 }
-
 
 function formatRandomUser(user) {
   const { name = {}, location = {}, dob = {}, picture = {} } = user;
@@ -48,17 +45,11 @@ function formatRandomUser(user) {
   };
 }
 
-
-
-
 function normalizeUserInterface(user) {
   return checkIsRandomUserInterface(user) ? formatRandomUser(user) : { ...user };
 }
 
-
-
-
-function checkIsSameUser(first, second) {
+export function checkIsSameUser(first, second) {
   if (first.id && second.id && first.id === second.id) {
     return true;
   }
@@ -67,9 +58,6 @@ function checkIsSameUser(first, second) {
   }
   return compareIgnoreCase(first.full_name, second.full_name);
 }
-
-
-
 
 function mergeUsers(target, source) {
   const merged = { ...target };
@@ -81,10 +69,6 @@ function mergeUsers(target, source) {
   }
   return merged;
 }
-
-
-
-
 
 function removeDuplicates(users) {
   const uniqueUsers = [];
@@ -101,21 +85,12 @@ function removeDuplicates(users) {
   return uniqueUsers;
 }
 
-
-
-
-
-
 function getNormalizedCourse(course) {
   if (typeof course !== 'string') {
     return null;
   }
   return COURSES.find((item) => compareIgnoreCase(item, course)) ?? null;
 }
-
-
-
-
 
 function createUniqueId(preferredId, usedIds) {
   let id = typeof preferredId === 'string' && preferredId !== '' ? preferredId : createRandomId();
@@ -126,10 +101,6 @@ function createUniqueId(preferredId, usedIds) {
   usedIds.add(id);
   return id;
 }
-
-
-
-
 
 function createTeacher(user, usedIds) {
   const birthday = user.b_day ?? user.b_date ?? null;
@@ -150,7 +121,6 @@ function createTeacher(user, usedIds) {
     phone: user.phone ?? null,
     picture_large: user.picture_large ?? null,
     picture_thumbnail: user.picture_thumbnail ?? null,
-    
 
     id: createUniqueId(user.id, usedIds),
     favorite: typeof user.favorite === 'boolean' ? user.favorite : false,
@@ -159,10 +129,6 @@ function createTeacher(user, usedIds) {
     note: typeof user.note === 'string' ? user.note : '',
   };
 }
-
-
-
-
 
 export function getFormattedUsers(...userLists) {
   const normalizedUsers = userLists.flat().map(normalizeUserInterface);

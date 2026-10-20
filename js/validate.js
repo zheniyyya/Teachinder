@@ -7,6 +7,7 @@ import {
   OPTIONAL_FIELDS,
   PHONE_FORMATS,
 } from './constants.js';
+
 import { checkStartsWithCapital } from './helpers.js';
 
 function checkIsValidCapitalizedField(value, field) {
