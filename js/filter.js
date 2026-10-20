@@ -1,4 +1,5 @@
 import { FILTERABLE_FIELDS } from './constants.js';
+
 import { checkIsPlainObject, compareIgnoreCase } from './helpers.js';
 
 function getAgeRange(age) {

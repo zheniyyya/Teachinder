@@ -2,12 +2,6 @@ import { createUsersFilter } from './filter.js';
 import { checkIsPlainObject, roundTo } from './helpers.js';
 import { createSearchPredicate } from './search.js';
 
-
-
-
-
-
-
 function createConditionPredicate(condition) {
   if (typeof condition === 'function') {
     return condition;
@@ -17,13 +11,6 @@ function createConditionPredicate(condition) {
   }
   return createSearchPredicate(condition);
 }
-
-
-
-
-
-
-
 
 export function getMatchPercentage(users, condition) {
   if (!Array.isArray(users) || users.length === 0) {

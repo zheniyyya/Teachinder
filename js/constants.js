@@ -44,7 +44,9 @@ export const PHONE_FORMATS = Object.freeze({
 });
 
 export const DEFAULT_PHONE_FORMAT = /^\+?[\d\s()-]+$/;
+
 export const MIN_PHONE_DIGITS = 7;
+
 export const MAX_PHONE_DIGITS = 15;
 
 export const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
