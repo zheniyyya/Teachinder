@@ -1,9 +1,10 @@
+import { saveTeacher } from '../api.js';
 import { COURSES, PHONE_FORMATS } from '../constants.js';
 import { checkIsSameUser, getFormattedUsers } from '../format.js';
 import { capitalize, getSortedUniqueValues } from '../helpers.js';
 import { validateUser } from '../validate.js';
 import { escapeHtml, fillSelect } from './dom.js';
-import { addTeacher, getTeachers } from './store.js';
+import { addTeacher, getTeachers, subscribe } from './store.js';
 
 const CLOSED_MODAL_HASH = '#!';
 
@@ -28,6 +29,10 @@ const FORM_ERROR_MESSAGES = Object.freeze({
 const REQUIRED_FIELD_MESSAGE = 'this field is required';
 const DUPLICATE_TEACHER_MESSAGE = 'a teacher with this email has already been added';
 
+
+
+
+
 function checkIsEmpty(value) {
   return value === null || value === undefined || value === '';
 }
@@ -35,6 +40,11 @@ function checkIsEmpty(value) {
 function checkIsAlreadyAdded(teacher) {
   return getTeachers().some((existingTeacher) => checkIsSameUser(existingTeacher, teacher));
 }
+
+
+
+
+
 
 function readTeacher(form) {
   const data = new FormData(form);
@@ -53,6 +63,10 @@ function readTeacher(form) {
     note: getText('notes'),
   };
 }
+
+
+
+
 
 function getFormErrors(teacher) {
   const { errors } = validateUser(teacher);
@@ -74,6 +88,10 @@ function getFormErrors(teacher) {
     }));
 }
 
+
+
+
+
 function renderErrors(form, errors) {
   form.querySelectorAll('.form-error').forEach((error) => error.remove());
 
@@ -83,6 +101,21 @@ function renderErrors(form, errors) {
   }
 }
 
+function renderSubmitError(form, message) {
+  const footer = form.querySelector('.modal-footer');
+  footer.insertAdjacentHTML('afterbegin', `<p class="form-error" role="alert">${escapeHtml(message)}</p>`);
+}
+
+function renderPhonePlaceholder(form, defaultPlaceholder) {
+  const { country, phone } = form.elements;
+  phone.placeholder = PHONE_FORMATS[country.value]?.example ?? defaultPlaceholder;
+}
+
+
+
+
+
+
 function renderOptions(form) {
   const countries = [...getTeachers().map((teacher) => teacher.country), ...Object.keys(PHONE_FORMATS)];
 
@@ -90,8 +123,13 @@ function renderOptions(form) {
   fillSelect(form.elements.country, getSortedUniqueValues(countries));
 }
 
+
+
+
 export function initAddTeacherForm() {
   const form = document.getElementById('add-teacher-form');
+  const submitButton = form.querySelector('[type="submit"]');
+  const defaultPhonePlaceholder = form.elements.phone.placeholder;
 
   renderOptions(form);
 
@@ -99,7 +137,11 @@ export function initAddTeacherForm() {
     event.target.closest('.form-group')?.querySelector('.form-error')?.remove();
   });
 
-  form.addEventListener('submit', (event) => {
+  form.elements.country.addEventListener('change', () => {
+    renderPhonePlaceholder(form, defaultPhonePlaceholder);
+  });
+
+  form.addEventListener('submit', async (event) => {
     event.preventDefault();
 
     const [teacher] = getFormattedUsers([readTeacher(form)]);
@@ -109,8 +151,19 @@ export function initAddTeacherForm() {
     if (errors.length > 0) {
       return;
     }
-    addTeacher(teacher);
-    form.reset();
-    window.location.hash = CLOSED_MODAL_HASH;
+
+    submitButton.disabled = true;
+    try {
+      addTeacher(await saveTeacher(teacher));
+      form.reset();
+      renderPhonePlaceholder(form, defaultPhonePlaceholder);
+      window.location.hash = CLOSED_MODAL_HASH;
+    } catch (error) {
+      renderSubmitError(form, `Could not save the teacher: ${error.message}`);
+    } finally {
+      submitButton.disabled = false;
+    }
   });
+
+  subscribe(() => renderOptions(form));
 }

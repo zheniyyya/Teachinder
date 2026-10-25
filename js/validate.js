@@ -15,6 +15,8 @@ function checkIsValidCapitalizedField(value, field) {
   return isEmptyOptional || checkStartsWithCapital(value);
 }
 
+
+
 export function checkIsValidAge(age) {
   return typeof age === 'number' && Number.isFinite(age) && age >= 0;
 }
@@ -26,7 +28,7 @@ export function checkIsValidPhone(phone, country) {
 
   const countryFormat = PHONE_FORMATS[country];
   if (countryFormat) {
-    return countryFormat.test(phone);
+    return countryFormat.pattern.test(phone);
   }
 
   const digitsCount = phone.replace(/\D/g, '').length;
@@ -37,9 +39,29 @@ export function checkIsValidPhone(phone, country) {
   );
 }
 
+
+
+
+function getPhoneErrorMessage(country) {
+  const countryFormat = PHONE_FORMATS[country];
+
+  if (countryFormat) {
+    return `does not match the phone format for "${country}", e.g. ${countryFormat.example}`;
+  }
+  return country
+    ? `does not match the phone format for "${country}"`
+    : 'does not match the international phone format';
+}
+
+
+
+
 export function checkIsValidEmail(email) {
   return typeof email === 'string' && EMAIL_PATTERN.test(email);
 }
+
+
+
 
 export function validateUser(user) {
   const errors = {};
@@ -55,9 +77,7 @@ export function validateUser(user) {
   }
 
   if (!checkIsValidPhone(user.phone, user.country)) {
-    errors.phone = user.country
-      ? `does not match the phone format for "${user.country}"`
-      : 'does not match the international phone format';
+    errors.phone = getPhoneErrorMessage(user.country);
   }
 
   if (!checkIsValidEmail(user.email)) {

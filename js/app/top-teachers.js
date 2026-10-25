@@ -1,50 +1,34 @@
-import { filterUsers } from '../filter.js';
 import { getSortedUniqueValues } from '../helpers.js';
-import { createSearchPredicate } from '../search.js';
 import { fillSelect } from './dom.js';
-import { getTeachers, subscribe } from './store.js';
+import { getTeachers, getVisibleTeachers, setFilters, setSearchQuery, subscribe } from './store.js';
 import { createEmptyMessageHtml, createTeacherCardHtml } from './templates.js';
 
 function readFilters(form) {
-  const { country, age, gender, favorite } = form.elements;
+  const { country, age, gender, favorite, photo } = form.elements;
 
   return {
     country: country.value,
     age: age.value,
     gender: gender.value,
     favorite: favorite.checked || undefined,
+    withPhoto: photo.checked,
   };
-}
-
-function checkHasPhoto(teacher) {
-  return Boolean(teacher.picture_large);
-}
-
-function selectVisibleTeachers(teachers, filtersForm, searchQuery) {
-  let visibleTeachers = filterUsers(teachers, readFilters(filtersForm));
-
-  if (filtersForm.elements.photo.checked) {
-    visibleTeachers = visibleTeachers.filter(checkHasPhoto);
-  }
-  if (searchQuery !== '') {
-    visibleTeachers = visibleTeachers.filter(createSearchPredicate(searchQuery));
-  }
-  return visibleTeachers;
 }
 
 export function initTopTeachers() {
   const grid = document.getElementById('teachers-grid');
   const filtersForm = document.getElementById('teachers-filters');
   const searchForm = document.getElementById('search-form');
-  let searchQuery = '';
+  const searchInput = searchForm.elements.q;
 
   function renderGrid() {
-    const teachers = selectVisibleTeachers(getTeachers(), filtersForm, searchQuery);
+    const teachers = getVisibleTeachers();
 
-    grid.innerHTML =
-      teachers.length > 0
-        ? teachers.map(createTeacherCardHtml).join('')
-        : createEmptyMessageHtml('No teachers found');
+    if (teachers.length > 0) {
+      grid.innerHTML = teachers.map(createTeacherCardHtml).join('');
+    } else {
+      grid.innerHTML = getTeachers().length > 0 ? createEmptyMessageHtml('No teachers found') : '';
+    }
   }
 
   function renderCountryOptions() {
@@ -57,19 +41,20 @@ export function initTopTeachers() {
     renderGrid();
   }
 
-  filtersForm.addEventListener('change', renderGrid);
+  filtersForm.addEventListener('change', () => {
+    setFilters(readFilters(filtersForm));
+  });
 
   searchForm.addEventListener('submit', (event) => {
     event.preventDefault();
-    searchQuery = searchForm.elements.q.value.trim();
     filtersForm.reset();
-    renderGrid();
+    setFilters(readFilters(filtersForm));
+    setSearchQuery(searchInput.value.trim());
   });
 
-  searchForm.elements.q.addEventListener('input', () => {
-    if (searchQuery !== '' && searchForm.elements.q.value.trim() === '') {
-      searchQuery = '';
-      renderGrid();
+  searchInput.addEventListener('input', () => {
+    if (searchInput.value.trim() === '') {
+      setSearchQuery('');
     }
   });
 

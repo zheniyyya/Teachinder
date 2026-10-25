@@ -65,6 +65,16 @@ export function createStatisticsRowHtml(teacher) {
   return `<tr>${cells.map((cell) => `<td>${escapeHtml(cell)}</td>`).join('')}</tr>`;
 }
 
+export function createEmptyRowHtml(text, columnsCount) {
+  return `<tr><td class="empty-message" colspan="${columnsCount}">${escapeHtml(text)}</td></tr>`;
+}
+
+export function createStatisticsSummaryHtml(items) {
+  return items
+    .map(({ label, value }) => `<div class="stats-summary-item"><dt>${escapeHtml(label)}</dt><dd>${escapeHtml(value)}</dd></div>`)
+    .join('');
+}
+
 export function createPaginationHtml(pageCount, currentPage) {
   if (pageCount <= 1) {
     return '';

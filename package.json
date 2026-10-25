@@ -1,11 +1,14 @@
 {
   "name": "teachinder",
   "version": "1.0.0",
-  "description": "FE4U labs: Teachinder layout (Lab 1), data processing (Lab 2) and the interactive page (Lab 3)",
+  "description": "FE4U labs: Teachinder layout (Lab 1), data processing (Lab 2), the interactive page (Lab 3) and requests to the API (Lab 4)",
   "private": true,
   "type": "module",
   "scripts": {
-    "start": "npx --yes http-server . -c-1 -o",
+    "start": "json-server db.json --port 3000 --static .",
     "lab2": "node js/main.js"
+  },
+  "devDependencies": {
+    "json-server": "^1.0.0-beta.15"
   }
 }
