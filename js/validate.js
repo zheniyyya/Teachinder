@@ -1,3 +1,4 @@
+import { includes, inRange, isEmpty, isFinite, isString } from 'lodash-es';
 import {
   CAPITALIZED_FIELDS,
   DEFAULT_PHONE_FORMAT,
@@ -11,18 +12,18 @@ import {
 import { checkStartsWithCapital } from './helpers.js';
 
 function checkIsValidCapitalizedField(value, field) {
-  const isEmptyOptional = OPTIONAL_FIELDS.includes(field) && value === '';
+  const isEmptyOptional = includes(OPTIONAL_FIELDS, field) && value === '';
   return isEmptyOptional || checkStartsWithCapital(value);
 }
 
 
 
 export function checkIsValidAge(age) {
-  return typeof age === 'number' && Number.isFinite(age) && age >= 0;
+  return isFinite(age) && age >= 0;
 }
 
 export function checkIsValidPhone(phone, country) {
-  if (typeof phone !== 'string') {
+  if (!isString(phone)) {
     return false;
   }
 
@@ -32,11 +33,7 @@ export function checkIsValidPhone(phone, country) {
   }
 
   const digitsCount = phone.replace(/\D/g, '').length;
-  return (
-    DEFAULT_PHONE_FORMAT.test(phone) &&
-    digitsCount >= MIN_PHONE_DIGITS &&
-    digitsCount <= MAX_PHONE_DIGITS
-  );
+  return DEFAULT_PHONE_FORMAT.test(phone) && inRange(digitsCount, MIN_PHONE_DIGITS, MAX_PHONE_DIGITS + 1);
 }
 
 
@@ -57,7 +54,7 @@ function getPhoneErrorMessage(country) {
 
 
 export function checkIsValidEmail(email) {
-  return typeof email === 'string' && EMAIL_PATTERN.test(email);
+  return isString(email) && EMAIL_PATTERN.test(email);
 }
 
 
@@ -85,7 +82,7 @@ export function validateUser(user) {
   }
 
   return {
-    isValid: Object.keys(errors).length === 0,
+    isValid: isEmpty(errors),
     errors,
   };
 }

@@ -1,3 +1,49 @@
 {
-  "teachers": []
+  "teachers": [
+    {
+      "gender": "Female",
+      "title": null,
+      "full_name": "Zhenia",
+      "city": "Kyiv",
+      "state": null,
+      "country": "Australia",
+      "postcode": null,
+      "coordinates": null,
+      "timezone": null,
+      "email": "test@gmail.com",
+      "b_day": "1994-09-30",
+      "age": 32,
+      "phone": "02-2345-2345",
+      "picture_large": null,
+      "picture_thumbnail": null,
+      "id": "lo8qAW-V2JM",
+      "favorite": false,
+      "course": "Mathematics",
+      "bg_color": "#e74c3c",
+      "note": ""
+    },
+    {
+      "gender": "Male",
+      "title": null,
+      "full_name": "Ivan",
+      "city": "Kyiv",
+      "state": null,
+      "country": "Australia",
+      "postcode": null,
+      "coordinates": null,
+      "timezone": null,
+      "email": "test@gmail.com",
+      "b_day": "1990-06-16",
+      "age": 36,
+      "phone": "20-4567-3254",
+      "picture_large": null,
+      "picture_thumbnail": null,
+      "id": "O5V79Azz-pc",
+      "favorite": false,
+      "course": "Physics",
+      "bg_color": "#e74c3c",
+      "note": ""
+    }
+  ],
+  "$schema": "./node_modules/json-server/schema.json"
 }

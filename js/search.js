@@ -1,11 +1,12 @@
+import { find, isNumber, isString, overSome } from 'lodash-es';
 import { checkIncludesIgnoreCase } from './helpers.js';
 
 export function createSearchPredicate(query) {
-  if (typeof query === 'number') {
+  if (isNumber(query)) {
     return (user) => user.age === query;
   }
 
-  if (typeof query !== 'string') {
+  if (!isString(query)) {
     throw new TypeError('The search parameter must be a string or a number');
   }
 
@@ -16,12 +17,13 @@ export function createSearchPredicate(query) {
 
   const isNumericQuery = /^\d+$/.test(text);
 
-  return (user) =>
-    (isNumericQuery && user.age === Number(text)) ||
-    checkIncludesIgnoreCase(user.full_name, text) ||
-    checkIncludesIgnoreCase(user.note, text);
+  return overSome([
+    (user) => isNumericQuery && user.age === Number(text),
+    (user) => checkIncludesIgnoreCase(user.full_name, text),
+    (user) => checkIncludesIgnoreCase(user.note, text),
+  ]);
 }
 
 export function findUser(users, query) {
-  return users.find(createSearchPredicate(query)) ?? null;
+  return find(users, createSearchPredicate(query)) ?? null;
 }

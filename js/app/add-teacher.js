@@ -1,4 +1,4 @@
-import { saveTeacher } from '../api.js';
+import { fetchCoordinates, saveTeacher } from '../api.js';
 import { COURSES, PHONE_FORMATS } from '../constants.js';
 import { checkIsSameUser, getFormattedUsers } from '../format.js';
 import { capitalize, getSortedUniqueValues } from '../helpers.js';
@@ -39,6 +39,15 @@ function checkIsEmpty(value) {
 
 function checkIsAlreadyAdded(teacher) {
   return getTeachers().some((existingTeacher) => checkIsSameUser(existingTeacher, teacher));
+}
+
+async function findCoordinates(teacher) {
+  try {
+    return await fetchCoordinates(teacher);
+  } catch (error) {
+    console.info(`Coordinates of "${teacher.city}, ${teacher.country}" are not found: ${error.message}`);
+    return null;
+  }
 }
 
 
@@ -154,7 +163,8 @@ export function initAddTeacherForm() {
 
     submitButton.disabled = true;
     try {
-      addTeacher(await saveTeacher(teacher));
+      const coordinates = await findCoordinates(teacher);
+      addTeacher(await saveTeacher({ ...teacher, coordinates }));
       form.reset();
       renderPhonePlaceholder(form, defaultPhonePlaceholder);
       window.location.hash = CLOSED_MODAL_HASH;

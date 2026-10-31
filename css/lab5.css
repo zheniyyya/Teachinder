@@ -1,0 +1,31 @@
+.stats-views {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 30px;
+}
+
+.stats-views .btn[aria-pressed="true"] {
+  background: #e74c3c;
+  color: #fff;
+}
+
+.stats-chart[hidden],
+.stats-pivot[hidden] {
+  display: none;
+}
+
+.stats-chart .filter-group {
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.stats-chart-canvas {
+  position: relative;
+  height: 360px;
+}
+
+.teacher-map {
+  z-index: 0;
+}

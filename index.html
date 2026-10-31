@@ -10,9 +10,25 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=PT+Sans:wght@400;700&family=Source+Sans+3:wght@400;600&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
 
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@webdatarocks/webdatarocks@1.4.19/webdatarocks.min.css">
+
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/lab3.css">
   <link rel="stylesheet" href="css/lab4.css">
+  <link rel="stylesheet" href="css/lab5.css">
+
+  <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@webdatarocks/webdatarocks@1.4.19/webdatarocks.js"></script>
+  <script type="importmap">
+    {
+      "imports": {
+        "lodash-es": "https://cdn.jsdelivr.net/npm/lodash-es@4.17.21/+esm",
+        "dayjs": "https://cdn.jsdelivr.net/npm/dayjs@1.11.13/+esm"
+      }
+    }
+  </script>
 </head>
 
 <body>
@@ -92,24 +108,28 @@
     <h2 class="section-title">Statistics</h2>
 
 
-    <div class="stats-table-wrapper">
-      <table class="stats-table" id="statistics-table">
-        <caption class="visually-hidden">Statistics of registered teachers</caption>
-        <thead>
-          <tr>
-            <th scope="col" data-sort="full_name"><button class="sort-btn" type="button">Name</button></th>
-            <th scope="col" data-sort="course"><button class="sort-btn" type="button">Speciality</button></th>
-            <th scope="col" data-sort="age"><button class="sort-btn" type="button">Age</button></th>
-            <th scope="col" data-sort="b_day"><button class="sort-btn" type="button">Birthday</button></th>
-            <th scope="col">Gender</th>
-            <th scope="col" data-sort="country"><button class="sort-btn" type="button">Nationality</button></th>
-          </tr>
-        </thead>
-        <tbody></tbody>
-      </table>
+    <div class="stats-views" id="statistics-views" role="group" aria-label="Statistics view">
+      <button class="btn" type="button" data-view="chart" aria-pressed="true">Chart</button>
+      <button class="btn" type="button" data-view="countries" aria-pressed="false">Report by countries</button>
+      <button class="btn" type="button" data-view="flat" aria-pressed="false">All teachers</button>
     </div>
 
-    <nav class="pagination" id="statistics-pagination" aria-label="Statistics pages"></nav>
+    <div class="stats-chart" id="statistics-chart-view">
+      <div class="filter-group">
+        <label for="chart-group">Group by</label>
+        <select id="chart-group">
+          <option value="course">Speciality</option>
+          <option value="gender">Gender</option>
+          <option value="country">Nationality</option>
+        </select>
+      </div>
+
+      <div class="stats-chart-canvas">
+        <canvas id="statistics-chart" role="img" aria-label="Statistics of registered teachers"></canvas>
+      </div>
+    </div>
+
+    <div class="stats-pivot" id="statistics-pivot" hidden></div>
   </section>
 
   <section id="favorites">

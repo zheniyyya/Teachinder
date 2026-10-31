@@ -9,8 +9,8 @@ const listeners = new Set();
 
 
 
-function notify() {
-  listeners.forEach((listener) => listener(teachers));
+function notify(change = null) {
+  listeners.forEach((listener) => listener(teachers, change));
 }
 
 function checkHasPhoto(teacher) {
@@ -33,9 +33,9 @@ export function getTeachers() {
   return teachers;
 }
 
-export function getVisibleTeachers() {
+function selectVisibleTeachers(sourceTeachers) {
   const { withPhoto, ...userFilters } = filters;
-  let visibleTeachers = filterUsers(teachers, userFilters);
+  let visibleTeachers = filterUsers(sourceTeachers, userFilters);
 
   if (withPhoto) {
     visibleTeachers = visibleTeachers.filter(checkHasPhoto);
@@ -44,6 +44,14 @@ export function getVisibleTeachers() {
     visibleTeachers = visibleTeachers.filter(createSearchPredicate(searchQuery));
   }
   return visibleTeachers;
+}
+
+export function getVisibleTeachers() {
+  return selectVisibleTeachers(teachers);
+}
+
+export function checkIsTeacherVisible(teacher) {
+  return selectVisibleTeachers([teacher]).length > 0;
 }
 
 
@@ -65,7 +73,8 @@ export function setTeachers(nextTeachers) {
 
 
 export function addTeacher(teacher) {
-  setTeachers([...teachers, teacher]);
+  teachers = [...teachers, teacher];
+  notify({ type: 'add', teacher });
 }
 
 

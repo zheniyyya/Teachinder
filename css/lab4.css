@@ -50,14 +50,6 @@
   font-weight: 700;
 }
 
-.stats-table-wrapper {
-  overflow-x: auto;
-}
-
-.stats-table td.empty-message {
-  text-align: center;
-}
-
 .modal-footer .form-error {
   margin: 0 0 10px;
 }
