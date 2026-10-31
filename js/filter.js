@@ -1,18 +1,19 @@
+import { filter, isBoolean, isFinite, isNil, isPlainObject, isString, map, overEvery, pickBy } from 'lodash-es';
 import { FILTERABLE_FIELDS } from './constants.js';
 
-import { checkIsPlainObject, compareIgnoreCase } from './helpers.js';
+import { compareIgnoreCase } from './helpers.js';
 
 function getAgeRange(age) {
-  if (typeof age === 'number' && Number.isFinite(age)) {
+  if (isFinite(age)) {
     return { min: age, max: age };
   }
 
-  if (checkIsPlainObject(age)) {
+  if (isPlainObject(age)) {
     const { min = 0, max = Infinity } = age;
     return { min, max };
   }
 
-  if (typeof age === 'string') {
+  if (isString(age)) {
     const text = age.trim();
     const range = text.match(/^(\d+)\s*-\s*(\d+)$/);
     const fromAge = text.match(/^(\d+)\s*\+$/);
@@ -32,7 +33,7 @@ function getAgeRange(age) {
 }
 
 function checkIsActiveFilterValue(value) {
-  if (value === undefined || value === null || value === '') {
+  if (isNil(value) || value === '') {
     return false;
   }
   return !compareIgnoreCase(value, 'any');
@@ -45,14 +46,14 @@ function createFieldPredicate(field, value) {
       return (user) => compareIgnoreCase(user[field], value);
 
     case 'favorite':
-      if (typeof value !== 'boolean') {
+      if (!isBoolean(value)) {
         throw new TypeError('The favorite parameter must be a boolean');
       }
       return (user) => user.favorite === value;
 
     case 'age': {
       const { min, max } = getAgeRange(value);
-      return (user) => typeof user.age === 'number' && user.age >= min && user.age <= max;
+      return (user) => isFinite(user.age) && user.age >= min && user.age <= max;
     }
 
     default:
@@ -63,13 +64,10 @@ function createFieldPredicate(field, value) {
 }
 
 export function createUsersFilter(filters = {}) {
-  const predicates = Object.entries(filters)
-    .filter(([, value]) => checkIsActiveFilterValue(value))
-    .map(([field, value]) => createFieldPredicate(field, value));
-
-  return (user) => predicates.every((predicate) => predicate(user));
+  const activeFilters = pickBy(filters, checkIsActiveFilterValue);
+  return overEvery(map(activeFilters, (value, field) => createFieldPredicate(field, value)));
 }
 
 export function filterUsers(users, filters = {}) {
-  return users.filter(createUsersFilter(filters));
+  return filter(users, createUsersFilter(filters));
 }

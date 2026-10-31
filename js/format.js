@@ -1,13 +1,12 @@
+import { capitalize, compact, find, findIndex, flatten, isBoolean, isNil, isPlainObject, isString, omitBy, sample } from 'lodash-es';
 import { COURSES } from './constants.js';
 
 import {
   calculateAge,
-  capitalize,
   checkIsHexColor,
   compareIgnoreCase,
   createRandomHexColor,
   createRandomId,
-  getRandomItem,
 } from './helpers.js';
 
 function getIdFromRandomUser(rawId) {
@@ -19,7 +18,7 @@ function getIdFromRandomUser(rawId) {
 }
 
 function checkIsRandomUserInterface(user) {
-  return typeof user.name === 'object' && user.name !== null;
+  return isPlainObject(user.name);
 }
 
 function formatRandomUser(user) {
@@ -28,7 +27,7 @@ function formatRandomUser(user) {
   return {
     gender: user.gender,
     title: name.title,
-    full_name: [name.first, name.last].filter(Boolean).join(' '),
+    full_name: compact([name.first, name.last]).join(' '),
     city: location.city,
     state: location.state,
     country: location.country,
@@ -60,21 +59,14 @@ export function checkIsSameUser(first, second) {
 }
 
 function mergeUsers(target, source) {
-  const merged = { ...target };
-
-  for (const [key, value] of Object.entries(source)) {
-    if (value !== null && value !== undefined) {
-      merged[key] = value;
-    }
-  }
-  return merged;
+  return { ...target, ...omitBy(source, isNil) };
 }
 
 function removeDuplicates(users) {
   const uniqueUsers = [];
 
   for (const user of users) {
-    const duplicateIndex = uniqueUsers.findIndex((uniqueUser) => checkIsSameUser(uniqueUser, user));
+    const duplicateIndex = findIndex(uniqueUsers, (uniqueUser) => checkIsSameUser(uniqueUser, user));
 
     if (duplicateIndex === -1) {
       uniqueUsers.push(user);
@@ -86,14 +78,14 @@ function removeDuplicates(users) {
 }
 
 function getNormalizedCourse(course) {
-  if (typeof course !== 'string') {
+  if (!isString(course)) {
     return null;
   }
-  return COURSES.find((item) => compareIgnoreCase(item, course)) ?? null;
+  return find(COURSES, (item) => compareIgnoreCase(item, course)) ?? null;
 }
 
 function createUniqueId(preferredId, usedIds) {
-  let id = typeof preferredId === 'string' && preferredId !== '' ? preferredId : createRandomId();
+  let id = isString(preferredId) && preferredId !== '' ? preferredId : createRandomId();
 
   while (usedIds.has(id)) {
     id = createRandomId();
@@ -106,7 +98,7 @@ function createTeacher(user, usedIds) {
   const birthday = user.b_day ?? user.b_date ?? null;
 
   return {
-    gender: capitalize(user.gender) ?? null,
+    gender: isString(user.gender) ? capitalize(user.gender) : null,
     title: user.title ?? null,
     full_name: user.full_name ?? null,
     city: user.city ?? null,
@@ -123,15 +115,15 @@ function createTeacher(user, usedIds) {
     picture_thumbnail: user.picture_thumbnail ?? null,
 
     id: createUniqueId(user.id, usedIds),
-    favorite: typeof user.favorite === 'boolean' ? user.favorite : false,
-    course: getNormalizedCourse(user.course) ?? getRandomItem(COURSES),
+    favorite: isBoolean(user.favorite) ? user.favorite : false,
+    course: getNormalizedCourse(user.course) ?? sample(COURSES),
     bg_color: checkIsHexColor(user.bg_color) ? user.bg_color : createRandomHexColor(),
-    note: typeof user.note === 'string' ? user.note : '',
+    note: isString(user.note) ? user.note : '',
   };
 }
 
 export function getFormattedUsers(...userLists) {
-  const normalizedUsers = userLists.flat().map(normalizeUserInterface);
+  const normalizedUsers = flatten(userLists).map(normalizeUserInterface);
   const uniqueUsers = removeDuplicates(normalizedUsers);
   const usedIds = new Set();
 

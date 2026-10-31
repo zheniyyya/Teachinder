@@ -23,31 +23,6 @@
   color: #7f8c8d;
 }
 
-.sort-btn {
-  border: none;
-  background: none;
-  font: inherit;
-  color: inherit;
-  cursor: pointer;
-}
-
-.sort-btn:hover,
-.sort-btn:focus-visible {
-  color: #e74c3c;
-}
-
-.stats-table th[aria-sort="ascending"] .sort-btn::after {
-  content: " ▲";
-}
-
-.stats-table th[aria-sort="descending"] .sort-btn::after {
-  content: " ▼";
-}
-
-.pagination .current {
-  font-weight: 700;
-}
-
 .toggle-map {
   padding: 0;
   border: none;

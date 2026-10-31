@@ -1,6 +1,6 @@
 import { getSortedUniqueValues } from '../helpers.js';
 import { fillSelect } from './dom.js';
-import { getTeachers, getVisibleTeachers, setFilters, setSearchQuery, subscribe } from './store.js';
+import { checkIsTeacherVisible, getTeachers, getVisibleTeachers, setFilters, setSearchQuery, subscribe } from './store.js';
 import { createEmptyMessageHtml, createTeacherCardHtml } from './templates.js';
 
 function readFilters(form) {
@@ -15,11 +15,18 @@ function readFilters(form) {
   };
 }
 
+
+
+
+
 export function initTopTeachers() {
   const grid = document.getElementById('teachers-grid');
   const filtersForm = document.getElementById('teachers-filters');
   const searchForm = document.getElementById('search-form');
   const searchInput = searchForm.elements.q;
+
+
+
 
   function renderGrid() {
     const teachers = getVisibleTeachers();
@@ -31,19 +38,44 @@ export function initTopTeachers() {
     }
   }
 
+
+
+
   function renderCountryOptions() {
     const countries = getSortedUniqueValues(getTeachers().map((teacher) => teacher.country));
     fillSelect(filtersForm.elements.country, countries);
   }
 
-  function render() {
-    renderCountryOptions();
-    renderGrid();
+
+  function appendTeacherCard(teacher) {
+    if (!checkIsTeacherVisible(teacher)) {
+      return;
+    }
+    if (grid.querySelector('.empty-message')) {
+      grid.innerHTML = '';
+    }
+    grid.insertAdjacentHTML('beforeend', createTeacherCardHtml(teacher));
   }
+
+
+  function render(teachers, change) {
+    renderCountryOptions();
+    if (change?.type === 'add') {
+      appendTeacherCard(change.teacher);
+    } else {
+      renderGrid();
+    }
+  }
+
+
+  
+
 
   filtersForm.addEventListener('change', () => {
     setFilters(readFilters(filtersForm));
   });
+
+
 
   searchForm.addEventListener('submit', (event) => {
     event.preventDefault();
@@ -51,6 +83,9 @@ export function initTopTeachers() {
     setFilters(readFilters(filtersForm));
     setSearchQuery(searchInput.value.trim());
   });
+
+
+  
 
   searchInput.addEventListener('input', () => {
     if (searchInput.value.trim() === '') {

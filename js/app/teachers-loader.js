@@ -66,17 +66,10 @@ export function initTeachersLoader() {
   }
 
 
-
-
-
-
-
-
   async function loadRandomTeachers(count) {
     const isFirstRequest = requestedCount === 0;
     nextButton.disabled = true;
     renderStatus('Loading teachers…');
-
 
 
     try {

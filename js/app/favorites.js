@@ -37,6 +37,9 @@ export function initFavorites() {
   const [previousButton, nextButton] = carousel.querySelectorAll('[data-step]');
   let firstIndex = 0;
 
+
+
+
   function render() {
     const favorites = getTeachers().filter((teacher) => teacher.favorite);
     const visibleCount = getVisibleFavoritesCount();
@@ -52,6 +55,8 @@ export function initFavorites() {
     nextButton.disabled = firstIndex === lastFirstIndex;
   }
 
+
+  
   carousel.addEventListener('click', (event) => {
     const arrow = event.target.closest('[data-step]');
     if (!arrow) {

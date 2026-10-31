@@ -1,7 +1,7 @@
 {
   "name": "teachinder",
   "version": "1.0.0",
-  "description": "FE4U labs: Teachinder layout (Lab 1), data processing (Lab 2), the interactive page (Lab 3) and requests to the API (Lab 4)",
+  "description": "FE4U labs: Teachinder layout (Lab 1), data processing (Lab 2), the interactive page (Lab 3) requests to the API (Lab 4) and third-party libraries (Lab 5)",
   "private": true,
   "type": "module",
   "scripts": {
@@ -10,5 +10,9 @@
   },
   "devDependencies": {
     "json-server": "^1.0.0-beta.15"
+  },
+  "dependencies": {
+    "dayjs": "^1.11.13",
+    "lodash-es": "^4.17.21"
   }
 }

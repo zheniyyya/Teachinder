@@ -1,6 +1,4 @@
-export function getRandomItem(items) {
-  return items[Math.floor(Math.random() * items.length)];
-}
+import dayjs from 'dayjs';
 
 export function createRandomHexColor() {
   const randomNumber = Math.floor(Math.random() * 0x1000000);
@@ -99,11 +97,24 @@ export function getReadableTextColor(hexColor) {
   return brightness > 0.6 ? '#2c3e50' : '#ffffff';
 }
 
-const DATE_FORMAT = new Intl.DateTimeFormat('en-GB', { timeZone: 'UTC' });
+export function getDaysUntilBirthday(birthDate, today = dayjs()) {
+  if (!birthDate) {
+    return null;
+  }
 
-export function formatDate(value) {
-  const date = new Date(value);
-  return value && !Number.isNaN(date.getTime()) ? DATE_FORMAT.format(date) : '';
+  // Only the date part is used, so the time zone of the ISO string does not shift the day
+  const birth = dayjs(String(birthDate).slice(0, 10));
+  if (!birth.isValid()) {
+    return null;
+  }
+
+  const startOfToday = today.startOf('day');
+  let nextBirthday = birth.year(startOfToday.year());
+
+  if (nextBirthday.isBefore(startOfToday)) {
+    nextBirthday = nextBirthday.add(1, 'year');
+  }
+  return nextBirthday.diff(startOfToday, 'day');
 }
 
 export function getSortedUniqueValues(values) {
