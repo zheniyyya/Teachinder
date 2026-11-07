@@ -1,0 +1,33 @@
+@use '@/shared/styles/variables' as *;
+
+.loader {
+  @include flex-center;
+  flex-direction: column;
+  gap: 16px;
+  min-height: 320px;
+}
+
+.spinner {
+  width: 56px;
+  height: 56px;
+  border: 5px solid $pink-border;
+  border-top-color: $accent;
+  border-radius: 50%;
+  animation: spin 0.9s linear infinite;
+}
+
+.label {
+  color: $text-light;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .spinner {
+    animation-duration: 3s;
+  }
+}

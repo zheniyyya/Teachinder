@@ -1,0 +1,10 @@
+@use '@/shared/styles/variables' as *;
+
+.error {
+  @include flex-center;
+  flex-direction: column;
+  gap: 14px;
+  min-height: 320px;
+  color: $accent-hover;
+  text-align: center;
+}

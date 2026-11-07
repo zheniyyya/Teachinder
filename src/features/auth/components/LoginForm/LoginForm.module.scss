@@ -1,0 +1,35 @@
+@use '@/shared/styles/variables' as *;
+
+.form {
+  padding: 24px;
+}
+
+.remember {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 18px;
+  font-size: 0.9rem;
+  color: $text-light;
+  cursor: pointer;
+
+  input {
+    accent-color: $accent;
+  }
+}
+
+.authError {
+  margin-bottom: 14px;
+  padding: 10px 12px;
+  border: 1px solid $pink-border;
+  border-left: 4px solid $accent;
+  border-radius: 4px;
+  background: $accent-soft;
+  color: $accent-hover;
+  font-size: 0.9rem;
+}
+
+.submit {
+  width: 100%;
+  padding: 10px 18px;
+}

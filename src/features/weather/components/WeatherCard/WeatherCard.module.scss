@@ -1,0 +1,74 @@
+@use '@/shared/styles/variables' as *;
+
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  height: 100%;
+  padding: 18px 16px;
+  border: 1px solid $border;
+  border-top: 4px solid $pink-border;
+  border-radius: 6px;
+  background: $surface;
+  @include transition(border-color 0.2s, box-shadow 0.2s);
+
+  &:hover {
+    border-top-color: $accent;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
+  }
+}
+
+.title {
+  color: $accent;
+  font-size: 1.15rem;
+  font-weight: 700;
+}
+
+.condition {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 48px;
+  font-weight: 700;
+}
+
+.icon {
+  font-size: 2.4rem;
+  line-height: 1;
+}
+
+.temperature {
+  display: flex;
+  flex-direction: column;
+  font-size: 0.95rem;
+}
+
+.wind {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: $text-light;
+  font-size: 0.9rem;
+}
+
+.windArrow {
+  display: inline-block;
+  color: $accent;
+  font-weight: 700;
+}
+
+.details {
+  display: grid;
+  gap: 8px;
+  padding-top: 12px;
+  border-top: 1px solid $border;
+  font-size: 0.85rem;
+
+  dt {
+    font-weight: 700;
+  }
+
+  dd {
+    color: $text-light;
+  }
+}

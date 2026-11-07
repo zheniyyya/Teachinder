@@ -1,0 +1,21 @@
+@use '@/shared/styles/variables' as *;
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.switch {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.notice {
+  padding: 10px 14px;
+  border-left: 4px solid $star;
+  border-radius: 4px;
+  background: $star-soft;
+  font-size: 0.95rem;
+}
