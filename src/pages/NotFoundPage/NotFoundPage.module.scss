@@ -1,0 +1,21 @@
+@use '@/shared/styles/variables' as *;
+
+.page {
+  @include flex-center;
+  flex-direction: column;
+  gap: 16px;
+  min-height: 100vh;
+  padding: 24px 16px;
+  text-align: center;
+}
+
+.code {
+  color: $accent;
+  font-size: 5rem;
+  line-height: 1;
+}
+
+.message {
+  color: $text-light;
+  font-size: 1.1rem;
+}

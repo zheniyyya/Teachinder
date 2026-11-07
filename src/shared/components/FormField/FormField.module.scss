@@ -1,0 +1,46 @@
+@use '@/shared/styles/variables' as *;
+
+.field {
+  margin-bottom: 16px;
+}
+
+.label {
+  display: block;
+  margin-bottom: 4px;
+  font-size: 0.85rem;
+  font-weight: 700;
+}
+
+.input {
+  width: 100%;
+  padding: 9px 12px;
+  border: 1px solid $border;
+  border-radius: 4px;
+  font-size: 0.95rem;
+  @include transition(border-color 0.2s, box-shadow 0.2s);
+
+  &:focus {
+    outline: none;
+    border-color: $accent;
+    box-shadow: 0 0 0 3px rgba($accent, 0.15);
+  }
+
+  &[aria-invalid='true'] {
+    border-color: $accent;
+    background: $accent-soft;
+  }
+}
+
+.hint,
+.error {
+  margin-top: 4px;
+  font-size: 0.8rem;
+}
+
+.hint {
+  color: $text-light;
+}
+
+.error {
+  color: $accent-hover;
+}

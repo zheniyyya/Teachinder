@@ -1,0 +1,30 @@
+@use '@/shared/styles/variables' as *;
+
+.page {
+  @include flex-center;
+  flex-direction: column;
+  gap: 24px;
+  min-height: 100vh;
+  padding: 24px 16px;
+  background:
+    radial-gradient(circle at 15% 20%, rgba($pink-border, 0.45), transparent 40%),
+    radial-gradient(circle at 85% 80%, rgba($star, 0.25), transparent 45%),
+    $page-background;
+}
+
+.card {
+  width: 100%;
+  max-width: 380px;
+  overflow: hidden;
+  border-radius: 6px;
+  background: $surface;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+}
+
+.title {
+  padding: 12px 24px;
+  background: $header-dark;
+  color: #fff;
+  font-size: 1.15rem;
+  font-weight: 700;
+}

@@ -1,0 +1,15 @@
+@use '@/shared/styles/variables' as *;
+
+.menu {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.greeting {
+  color: $text-light;
+
+  strong {
+    color: $text;
+  }
+}

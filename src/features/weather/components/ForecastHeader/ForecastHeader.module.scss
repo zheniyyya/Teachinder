@@ -1,0 +1,55 @@
+@use '@/shared/styles/variables' as *;
+
+.header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.place {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 10px;
+  font-size: 2.4rem;
+  font-weight: 400;
+  line-height: 1.2;
+}
+
+.country {
+  color: $text-light;
+  font-size: 1rem;
+}
+
+.subtitle {
+  color: $text-light;
+}
+
+.summary {
+  display: flex;
+  gap: 28px;
+  text-align: center;
+
+  dt {
+    color: $text-light;
+    font-size: 0.85rem;
+  }
+
+  dd {
+    font-size: 1.3rem;
+    font-weight: 700;
+  }
+}
+
+@media (max-width: $breakpoint-phone) {
+  .place {
+    font-size: 1.9rem;
+  }
+
+  .summary {
+    width: 100%;
+    justify-content: space-between;
+  }
+}
